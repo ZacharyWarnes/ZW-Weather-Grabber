@@ -6,25 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZW Weather Grabber</title>
     <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    
 </head>
 <body>
-    <header class="header">
+    <header class="jumbotron text-center bg-primary text-white">
     <h1>Weather Dashboard</h1>
     </header>
-    <section>
-        <div>
-            <h2>Search for a City:</h2>
+    <section class="container row">
+    <section class="container col-sm-4">
+        <div> 
+            <h3>Search for a City:</h3>
         </div>
+        <br>
         <div>
             <form id="userInput">
-                <label for="cname">City Name:</label><br>
+                
                 <input type="text" id="cname" name="cname"/><br>
-                <button type="submit" id="searchBtn">Search</button>
+                <button type="submit" id="searchBtn"  class="btn btn-primary mt-2 ">Search</button>
             </form>
         </div>
         <div id="recentSearches">
             recent searches
         </div>
+    </section>
+    <section class=" container col-sm-8">
         <div id="weatherCard">
             weather card
         </div>
@@ -32,7 +38,32 @@
             5-Day Forcast
         </div>
     </section>
+</section>
 
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+ <!-- Link day.js to help format dates -->
+ 
+ <script
+   src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"
+ ></script>
+ 
+ <script 
+   src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/plugin/utc.min.js" 
+ ></script>
+ 
+ <script 
+   src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/plugin/timezone.min.js" 
+ ></script>
+
+    <!-- Custom Java Script -->
     <script src="/script.js"></script>
 </body>
 </html>
