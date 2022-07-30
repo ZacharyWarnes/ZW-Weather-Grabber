@@ -4,6 +4,7 @@ var APIkey = "8bdf30542457a49d91637d1b7a6f89e0";
 var userInput = document.getElementById("userInput");
 var userInputEl = document.getElementById("cname");
 var searchHistory = [];
+var recentSearchContainerEL= document.getElementById("recentSearches");
 
 // Timezone plugins for day.js
 dayjs.extend(window.dayjs_plugin_utc);
@@ -15,6 +16,7 @@ function getCityName(event){
     console.log(cityName);
 
     fetchGeoLocation(cityName);
+    storeCityName(cityName);
 
 }
 
@@ -65,16 +67,15 @@ function renderCurrentWeather (locationName,current,timezone) {
     var currentWind = data.current.wind_speed;
     var currentHumid = data.current.humidity;
     var currentUv = data.current.uvi;
-    var iconUrl = `https://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
-    var iconDescription = weather.weather[0].description || weather[0].main;
+    var iconUrl = `https://openweathermap.org/img/w/${data.current.weather[0].icon}.png`;
+    var iconDescription = data.current.weather[0].description || data.current.weather[0].main;
 
-
-        console.log(currentDate,currentTemp,currentWind,currentHumid,currentUv,currentWeatherIcon);
+     console.log(currentDate,currentTemp,currentWind,currentHumid,currentUv);
 
     var cityNameEl = document.createElement('h3');
     var weatherIcon = document.createElement('img');
     var tempEl = document.createElement('p');
-    var windEl = docuemnt.createElement('p');
+    var windEl = document.createElement('p');
     var humidityEl = document.createElement('p');
     var uvIndexElk = document.createElement('p');
 
@@ -82,9 +83,39 @@ function renderCurrentWeather (locationName,current,timezone) {
     
 }
 
-
+function renderForcast(){
+    
+}
 
 }
-        
+//Store City Name in Local Storage
+function storeCityName (cityName) {
+// Need to push new city name to empty search history array or if data is already in local storage, we need to push to this data
+var savedCityNames=JSON.parse(localStorage.getItem("searchHistory"))||searchHistory;
+    savedCityNames.push(cityName);
+    localStorage.setItem("searchHistory",JSON.stringify(savedCityNames));
+}
+// Render Local Storage as buttons to call weather
 
+
+function renderLocalStorage(){
+    var returnedLocalStorage= JSON.parse(localStorage.getItem("searchHistory"));
+
+if (!returnedLocalStorage) {
+    return;
+}
+
+    for (let index = 0; index < returnedLocalStorage.length; index++) {
+    const buttonText  = returnedLocalStorage[index];
+    
+    var button= document.createElement('button');
+    button.textContent=buttonText;
+    recentSearchContainerEL.appendChild(button);
+
+    
+}
+}
+
+
+renderLocalStorage();
 userInput.addEventListener("submit", getCityName);
