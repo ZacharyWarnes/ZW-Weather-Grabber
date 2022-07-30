@@ -3,6 +3,11 @@ var APIkey = "8bdf30542457a49d91637d1b7a6f89e0";
 //Submit the form to fetch the weather information 
 var userInput = document.getElementById("userInput");
 var userInputEl = document.getElementById("cname");
+var searchHistory = [];
+
+// Timezone plugins for day.js
+dayjs.extend(window.dayjs_plugin_utc);
+dayjs.extend(window.dayjs_plugin_timezone);
 
 function getCityName(event){
     event.preventDefault();
@@ -13,21 +18,12 @@ function getCityName(event){
 
 }
 
-
-    //Fetch the city name from the text <input>
-    
-    // Call the fetchGeoLocation and pass the city name 
-
-//Handle button clicks to fetch weather information
-
-    //get the city name from the clicked buttoin's data-city attribute (event.target)
-
 //Fetch Geolocation Data (Geocoding API)
 function fetchGeoLocation(cityName) {
 
-    var reqeust= `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=8bdf30542457a49d91637d1b7a6f89e0`;
+    var geoReqeust= `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=8bdf30542457a49d91637d1b7a6f89e0`;
 
-    fetch(reqeust)
+    fetch(geoReqeust)
     .then(function(response) {
         return response.json();
     })
@@ -35,27 +31,60 @@ function fetchGeoLocation(cityName) {
         console.log(data);
         var latitude = data[0].lat; 
         var longitude = data[0].lon; 
-fetchOneCallWeather(latitude,longitude);
+        var locationName = data[0].name
+fetchOneCallWeather(latitude,longitude,locationName);
     })
 
 }
 
-// fetchGeoLocation("Seattle");
-
 //Fetch Weather Data (ONECALL)
 
-function fetchOneCallWeather(latitude,longitude){
+function fetchOneCallWeather(latitude,longitude,locationName){
 console.log(latitude,longitude);
-    var request2= `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=8bdf30542457a49d91637d1b7a6f89e0&exclude=minutely`
+    var weatherRequest= `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=8bdf30542457a49d91637d1b7a6f89e0&exclude=minutely`
 
-    // fetch(request2)
-    // .then(function(response) {
-    //     return response.json();
-    // })
-    // .then(function(data) {
-    //     console.log(data);
-    // })
+    fetch(weatherRequest)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data);
+    
+renderItems(locationName, data);
+    })
 }
-//Render Function for returning data to page   
+//Render Function for returning data to page 
+function renderItems(locationName, data) {
+    renderCurrentWeather(locationName, data.current, data.timezone);
+    renderForcast(data.daily, data.timezone);
+
+// Render function for current weather and variables for creating current weather card
+function renderCurrentWeather (locationName,current,timezone) {
+    var currentDate = dayjs().tz(timezone).format('MM/DD/YYY');
+    var currentTemp = data.current.temp;
+    var currentWind = data.current.wind_speed;
+    var currentHumid = data.current.humidity;
+    var currentUv = data.current.uvi;
+    var iconUrl = `https://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
+    var iconDescription = weather.weather[0].description || weather[0].main;
+
+
+        console.log(currentDate,currentTemp,currentWind,currentHumid,currentUv,currentWeatherIcon);
+
+    var cityNameEl = document.createElement('h3');
+    var weatherIcon = document.createElement('img');
+    var tempEl = document.createElement('p');
+    var windEl = docuemnt.createElement('p');
+    var humidityEl = document.createElement('p');
+    var uvIndexElk = document.createElement('p');
+
+    
+    
+}
+
+
+
+}
+        
 
 userInput.addEventListener("submit", getCityName);
