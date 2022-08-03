@@ -6,7 +6,7 @@ var userInputEl = document.getElementById("cname");
 var searchHistory = [];
 var recentSearchContainerEL= document.getElementById("recentSearches");
 var currentWeatherCard = document.getElementById("weatherCard");
-var forcastCard = document.getElementById("forecast");
+var forecastCard = document.getElementById("forecast");
 
 // Timezone plugins for day.js
 dayjs.extend(window.dayjs_plugin_utc);
@@ -72,12 +72,11 @@ function renderCurrentWeather (locationName,current,timezone) {
     var iconUrl = `https://openweathermap.org/img/w/${data.current.weather[0].icon}.png`;
     var iconDescription = data.current.weather[0].description || data.current.weather[0].main;
 
-     console.log(currentDate,currentTemp,currentWind,currentHumid,currentUv);
+    
 //Elements that will appear in the Current Weather Card
     var cityNameEl = document.createElement('h3');
     var weatherIcon = document.createElement('img');
     var tempEl = document.createElement('p');
-    var windEl = document.createElement('p');
     var humidityEl = document.createElement('p');
     var uvIndexEl = document.createElement('p');
     var uvButton = document.createElement('button');
@@ -99,7 +98,7 @@ if (currentUv < 3) {
 //Content of the Current Weather card 
 cityNameEl.textContent = `${locationName} (${currentDate})`;
 tempEl.textContent = `Temp: ${currentTemp}`;
-humidityEl.textContent = `Humid: ${currentHumid}`;
+humidityEl.textContent = `Humid: ${currentHumid} %`;
 uvIndexEl.textContent = `UV Index: `;
 uvButton.textContent = currentUv;
 uvIndexEl.append(uvButton);
@@ -108,11 +107,39 @@ uvIndexEl.append(uvButton);
 currentWeatherCard.innerHTML = "";
 currentWeatherCard.append(cityNameEl,weatherIcon,tempEl,humidityEl,uvIndexEl);
 
-
 }
 
-function renderForcast(){
+//Render 5 day forecast and elements for forcast cards
+function renderForcast(daily,timezone){
+    var forecastStart = dayjs().tz(timezone).add(1,'day').startOf('day').unix();
+    var forecastEnd = dayjs().tz(timezone).add(6, 'day').startOf('day').unix();
+
+//Heading for forecast card container that only appears when function is run
+    var forecastContainerHeader = document.createElement('h3')
+    forecastContainerHeader.setAttribute('class', 'col-12');
+    forecastCard.innerHTML="";
+    forecastContainerHeader.textContent= '5-Day-Forcast';
+    forecastCard.append(forecastContainerHeader);
+
+// for loop for iterating through daily forcasts 5 times    
+for (let i = 0; i < daily.length; i++) {
+    if (daily[i].dt >= forecastStart && daily[i].dt < forecastEnd) {
+        
+        renderForcastCard(daily[i], timezone);
+    } 
+  }            
+}
+
+function renderForcastCard(daily,timezone) {
     
+    var date = daily.dt;
+    var dailyTemp = daily.temp.day;
+    var dailyWind = daily.wind_speed;
+    var dailyHumid = daily.humidity;
+    var dailyIconUrl = `https://openweathermap.org/img/w/${daily.weather[0].icon}.png`;
+    var dailyIconDescription = daily.weather[0].description || daily.weather[0].main;
+    
+    console.log(date, dailyTemp, dailyWind);
 }
 
 }
@@ -135,6 +162,7 @@ if (!returnedLocalStorage) {
 
     for (let index = 0; index < returnedLocalStorage.length; index++) {
     const buttonText  = returnedLocalStorage[index];
+    
     
     var button= document.createElement('button');
     button.textContent=buttonText;
