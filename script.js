@@ -131,7 +131,7 @@ for (let i = 0; i < daily.length; i++) {
 }
 
 function renderForcastCard(daily,timezone) {
-    
+
     var date = daily.dt;
     var dailyTemp = daily.temp.day;
     var dailyWind = daily.wind_speed;
@@ -140,6 +140,37 @@ function renderForcastCard(daily,timezone) {
     var dailyIconDescription = daily.weather[0].description || daily.weather[0].main;
     
     console.log(date, dailyTemp, dailyWind);
+
+// creating elements for the forcast card 
+    var column = document.createElement('div');
+    var card = document.createElement('div');
+    var cardBody = document.createElement('div');
+    var cardHeader = document.createElement('h3')
+    var cardWeatherIcon = document.createElement('img');
+    var cardTemp = document.createElement('p');
+    var cardWind = document.createElement('p');
+    var cardHumid = document.createElement('p');
+
+//Appending elements to create card
+    column.append(card);
+    card.append(cardBody);
+    cardBody.append(cardHeader,cardWeatherIcon,cardTemp,cardWind,cardHumid);
+
+//creating class attributes to style elements
+    column.setAttribute('class', 'col-sm p-2 forecastCard');
+    card.setAttribute('class','bg-primary border border-dark text-white');
+
+
+
+    cardHeader.textContent = dayjs.unix(date).tz(timezone).format('MM/DD/YYYY');
+    cardWeatherIcon.setAttribute('src', dailyIconUrl);
+    cardWeatherIcon.setAttribute('alt', dailyIconDescription);
+    cardTemp.textContent = `Temp: ${dailyTemp} °F`;
+    cardWind.textContent = `Wind: ${dailyWind} MPH`;
+    cardHumid.textContent = `Humidity: ${dailyHumid} %`;
+
+    forecastCard.append(column);
+
 }
 
 }
