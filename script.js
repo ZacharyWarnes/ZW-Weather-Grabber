@@ -13,11 +13,12 @@ dayjs.extend(window.dayjs_plugin_utc);
 dayjs.extend(window.dayjs_plugin_timezone);
 
 function getCityName(event){
+    
     event.preventDefault();
     var cityName = userInputEl.value;
-    console.log(cityName);
 
     fetchGeoLocation(cityName);
+    userInput.value = '';
     storeCityName(cityName);
 
 }
@@ -45,7 +46,7 @@ fetchOneCallWeather(latitude,longitude,locationName);
 
 function fetchOneCallWeather(latitude,longitude,locationName){
 console.log(latitude,longitude);
-    var weatherRequest= `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=8bdf30542457a49d91637d1b7a6f89e0&exclude=minutely`
+    var weatherRequest= `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=imperial&appid=8bdf30542457a49d91637d1b7a6f89e0&exclude=minutely`
 
     fetch(weatherRequest)
     .then(function(response) {
@@ -97,7 +98,7 @@ if (currentUv < 3) {
 
 //Content of the Current Weather card 
 cityNameEl.textContent = `${locationName} (${currentDate})`;
-tempEl.textContent = `Temp: ${currentTemp}`;
+tempEl.textContent = `Temp: ${currentTemp} °F`;
 humidityEl.textContent = `Humid: ${currentHumid} %`;
 uvIndexEl.textContent = `UV Index: `;
 uvButton.textContent = currentUv;
@@ -157,7 +158,7 @@ function renderForcastCard(daily,timezone) {
     cardBody.append(cardHeader,cardWeatherIcon,cardTemp,cardWind,cardHumid);
 
 //creating class attributes to style elements
-    column.setAttribute('class', 'col-sm p-2 forecastCard');
+    column.setAttribute('class', 'col-sm p-2');
     card.setAttribute('class','bg-primary border border-dark text-white');
 
 
@@ -194,14 +195,28 @@ if (!returnedLocalStorage) {
     for (let index = 0; index < returnedLocalStorage.length; index++) {
     const buttonText  = returnedLocalStorage[index];
     
-    
-    var button= document.createElement('button');
-    button.textContent=buttonText;
-    recentSearchContainerEL.appendChild(button);
+     var button= document.createElement('button');
+     button.setAttribute('class','button');
+     button.setAttribute('class', 'btn-block btn-sm btn-searched');
+     button.setAttribute('data-search',returnedLocalStorage[index]),
+     button.textContent=buttonText;
+     recentSearchContainerEL.appendChild(button);
 
+     recallPreviousSearch(button);
     
 }
+
+function recallPreviousSearch(button) {
+    var recallButton = button.target;
+    var recallSearch = button.getAttribute('btn-searched');
+    fetchGeoLocation(recallSearch);
+}
+
+
+//Recall current weather and forcast for previously searched city 
+
 }
 
 renderLocalStorage();
 userInput.addEventListener("submit", getCityName);
+recentSearchContainerEL.addEventListener("click", recallPreviousSearch);
