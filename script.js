@@ -153,13 +153,13 @@ function renderForcastCard(daily,timezone) {
     var cardHumid = document.createElement('p');
 
 //Appending elements to create card
-    column.append(card);
+    // column.append(card);
     card.append(cardBody);
     cardBody.append(cardHeader,cardWeatherIcon,cardTemp,cardWind,cardHumid);
 
 //creating class attributes to style elements
-    column.setAttribute('class', 'col-sm p-2');
-    card.setAttribute('class','bg-primary border border-dark text-white');
+    // column.setAttribute('class', 'col-2 p-2');
+    card.setAttribute('class','col-2 p-3 bg-primary border border-dark text-white');
 
 
 
@@ -170,7 +170,7 @@ function renderForcastCard(daily,timezone) {
     cardWind.textContent = `Wind: ${dailyWind} MPH`;
     cardHumid.textContent = `Humidity: ${dailyHumid} %`;
 
-    forecastCard.append(column);
+    forecastCard.append(card);
 
 }
 
@@ -179,12 +179,14 @@ function renderForcastCard(daily,timezone) {
 function storeCityName (cityName) {
 // Need to push new city name to empty search history array or if data is already in local storage, we need to push to this data
 var savedCityNames=JSON.parse(localStorage.getItem("searchHistory"))||searchHistory;
+
+if (!savedCityNames.includes(cityName)) {
     savedCityNames.push(cityName);
+} 
     localStorage.setItem("searchHistory",JSON.stringify(savedCityNames));
+    window.location.reload();
 }
 // Render Local Storage as buttons to call weather
-
-
 function renderLocalStorage(){
     var returnedLocalStorage= JSON.parse(localStorage.getItem("searchHistory"));
 
@@ -202,19 +204,22 @@ if (!returnedLocalStorage) {
      button.textContent=buttonText;
      recentSearchContainerEL.appendChild(button);
 
-     recallPreviousSearch(button);
+    //  recallPreviousSearch(button);
     
 }
+// Code for recalling function with previous search button
 
-function recallPreviousSearch(button) {
-    var recallButton = button.target;
-    var recallSearch = button.getAttribute('btn-searched');
-    fetchGeoLocation(recallSearch);
-}
 
 
 //Recall current weather and forcast for previously searched city 
 
+}
+
+function recallPreviousSearch(event) {
+    var recallButton = event.target.dataset.search;
+    // var recallSearch = event.getAttribute('btn-searched');
+    fetchGeoLocation(recallButton);
+    console.log(recallButton);
 }
 
 renderLocalStorage();
