@@ -60,6 +60,7 @@ renderItems(locationName, data);
 }
 //Render Function for returning data to page 
 function renderItems(locationName, data) {
+
     renderCurrentWeather(locationName, data.current, data.timezone);
     renderForcast(data.daily, data.timezone);
 
@@ -146,22 +147,20 @@ function renderForcastCard(daily,timezone) {
     var column = document.createElement('div');
     var card = document.createElement('div');
     var cardBody = document.createElement('div');
-    var cardHeader = document.createElement('h3')
+    var cardHeader = document.createElement('h4')
     var cardWeatherIcon = document.createElement('img');
     var cardTemp = document.createElement('p');
     var cardWind = document.createElement('p');
     var cardHumid = document.createElement('p');
 
 //Appending elements to create card
-    // column.append(card);
+    
     card.append(cardBody);
     cardBody.append(cardHeader,cardWeatherIcon,cardTemp,cardWind,cardHumid);
 
 //creating class attributes to style elements
-    // column.setAttribute('class', 'col-2 p-2');
-    card.setAttribute('class','col-2 p-3 bg-primary border border-dark text-white');
 
-
+    card.setAttribute('class','col-2 m-1 bg-primary border border-dark text-white');
 
     cardHeader.textContent = dayjs.unix(date).tz(timezone).format('MM/DD/YYYY');
     cardWeatherIcon.setAttribute('src', dailyIconUrl);

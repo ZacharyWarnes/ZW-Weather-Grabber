@@ -25,6 +25,7 @@
  To use this application, follow the link to the deployed [site]():
 
  * Enter in the name of a city you want to grab the local weather for.
+ * Your Search will populate under the search bar. Click that to call your current weather and future forecast.
  * Your local weather call should appear on the right hand side of the screen a long with a 5-day forecast.
  * To revisit a saved search, click the button of the city below the search bar and the previously called weather information will re-populate.
 
