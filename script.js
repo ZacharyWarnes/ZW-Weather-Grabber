@@ -203,25 +203,20 @@ if (!returnedLocalStorage) {
      button.setAttribute('data-search',returnedLocalStorage[index]),
      button.textContent=buttonText;
      recentSearchContainerEL.appendChild(button);
-
-    //  recallPreviousSearch(button);
     
 }
-// Code for recalling function with previous search button
 
-
-
-//Recall current weather and forcast for previously searched city 
 
 }
-
+//Recall current weather and forcast for previously searched city 
 function recallPreviousSearch(event) {
     var recallButton = event.target.dataset.search;
-    // var recallSearch = event.getAttribute('btn-searched');
     fetchGeoLocation(recallButton);
     console.log(recallButton);
 }
 
-renderLocalStorage();
+
+
 userInput.addEventListener("submit", getCityName);
+renderLocalStorage();
 recentSearchContainerEL.addEventListener("click", recallPreviousSearch);
