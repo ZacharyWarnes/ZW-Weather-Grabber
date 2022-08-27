@@ -17,14 +17,19 @@ function getCityName(event){
     event.preventDefault();
     var cityName = userInputEl.value;
 
-    fetchGeoLocation(cityName);
-    userInput.value = '';
-    storeCityName(cityName);
+    console.log(cityName);
 
+    
+    fetchGeoLocation(cityName);
+    storeCityName(cityName);
+    userInputEl.value = '';
+    
+    
 }
 
 //Fetch Geolocation Data (Geocoding API)
 function fetchGeoLocation(cityName) {
+console.log(cityName);
 
     var geoReqeust= `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=8bdf30542457a49d91637d1b7a6f89e0`;
 
@@ -34,6 +39,7 @@ function fetchGeoLocation(cityName) {
     })
     .then(function(data) {
         console.log(data);
+        
         var latitude = data[0].lat; 
         var longitude = data[0].lon; 
         var locationName = data[0].name
@@ -183,10 +189,13 @@ if (!savedCityNames.includes(cityName)) {
     savedCityNames.push(cityName);
 } 
     localStorage.setItem("searchHistory",JSON.stringify(savedCityNames));
-    window.location.reload();
+    // window.location.reload();
+    renderLocalStorage();
+    
 }
 // Render Local Storage as buttons to call weather
 function renderLocalStorage(){
+    recentSearchContainerEL.innerHTML = '';
     var returnedLocalStorage= JSON.parse(localStorage.getItem("searchHistory"));
 
 if (!returnedLocalStorage) {
