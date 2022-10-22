@@ -223,6 +223,8 @@ function recallPreviousSearch(event) {
     console.log(recallButton);
 }
 
+//Test change 
+
 
 
 userInput.addEventListener("submit", getCityName);
