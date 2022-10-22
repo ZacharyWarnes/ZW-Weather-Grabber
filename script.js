@@ -68,7 +68,7 @@ renderItems(locationName, data);
 function renderItems(locationName, data) {
 
     renderCurrentWeather(locationName, data.current, data.timezone);
-    renderForcast(data.daily, data.timezone);
+    renderForecast(data.daily, data.timezone);
 
 // Render function for current weather and variables for creating current weather card
 function renderCurrentWeather (locationName,current,timezone) {
@@ -117,8 +117,8 @@ currentWeatherCard.append(cityNameEl,weatherIcon,tempEl,humidityEl,uvIndexEl);
 
 }
 
-//Render 5 day forecast and elements for forcast cards
-function renderForcast(daily,timezone){
+//Render 5 day forecast and elements for forecast cards
+function renderForecast(daily,timezone){
     var forecastStart = dayjs().tz(timezone).add(1,'day').startOf('day').unix();
     var forecastEnd = dayjs().tz(timezone).add(6, 'day').startOf('day').unix();
 
@@ -126,19 +126,19 @@ function renderForcast(daily,timezone){
     var forecastContainerHeader = document.createElement('h3')
     forecastContainerHeader.setAttribute('class', 'col-12');
     forecastCard.innerHTML="";
-    forecastContainerHeader.textContent= '5-Day-Forcast';
+    forecastContainerHeader.textContent= '5-Day-Forecast';
     forecastCard.append(forecastContainerHeader);
 
-// for loop for iterating through daily forcasts 5 times    
+// for loop for iterating through daily forecasts 5 times    
 for (let i = 0; i < daily.length; i++) {
     if (daily[i].dt >= forecastStart && daily[i].dt < forecastEnd) {
         
-        renderForcastCard(daily[i], timezone);
+        renderForecastCard(daily[i], timezone);
     } 
   }            
 }
 
-function renderForcastCard(daily,timezone) {
+function renderForecastCard(daily,timezone) {
 
     var date = daily.dt;
     var dailyTemp = daily.temp.day;
@@ -149,7 +149,7 @@ function renderForcastCard(daily,timezone) {
     
     console.log(date, dailyTemp, dailyWind);
 
-// creating elements for the forcast card 
+// creating elements for the forecast card 
     var column = document.createElement('div');
     var card = document.createElement('div');
     var cardBody = document.createElement('div');
@@ -216,7 +216,7 @@ if (!returnedLocalStorage) {
 
 
 }
-//Recall current weather and forcast for previously searched city 
+//Recall current weather and forecast for previously searched city 
 function recallPreviousSearch(event) {
     var recallButton = event.target.dataset.search;
     fetchGeoLocation(recallButton);

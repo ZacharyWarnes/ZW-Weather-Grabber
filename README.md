@@ -18,7 +18,7 @@
 
  ## **Installation**
 
- To install this application, make a clone of this repository to your machine. Open the repoistory and open the index.html in your browser. 
+ To install this application, make a clone of this repository to your machine. Open the repository and open the index.html in your browser. 
 
 ## **Instructions**
 
