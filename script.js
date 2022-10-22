@@ -31,7 +31,7 @@ function getCityName(event){
 function fetchGeoLocation(cityName) {
 console.log(cityName);
 
-    var geoRequest= `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=8bdf30542457a49d91637d1b7a6f89e0`;
+    var geoRequest= `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${APIkey}`;
 
     fetch(geoRequest)
     .then(function(response) {
