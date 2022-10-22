@@ -223,7 +223,6 @@ function recallPreviousSearch(event) {
     console.log(recallButton);
 }
 
-//Test change 
 
 
 
