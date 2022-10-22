@@ -22,7 +22,7 @@
 
 ## **Instructions**
 
- To use this application, follow the link to the deployed [site](https://zacharywarnes.github.io/ZW-Weather-Grabber/):
+ To use this application, follow the link to the [deployed site](https://zacharywarnes.github.io/ZW-Weather-Grabber/):
 
  * Enter in the name of a city you want to grab the local weather for.
  * Your Search will populate under the search bar. Click that to call your current weather and future forecast.
