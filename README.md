@@ -29,6 +29,8 @@
  * Your local weather call should appear on the right hand side of the screen a long with a 5-day forecast.
  * To revisit a saved search, click the button of the city below the search bar and the previously called weather information will re-populate.
 
+ ![Picture of working site](./assets/ZW-Weather-Grabber.jpg)
+
 ## **Technologies**
 
 * [JavaScript](https://www.javascript.com/) Scripting Language
