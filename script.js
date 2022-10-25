@@ -79,6 +79,7 @@ function renderCurrentWeather (locationName,current,timezone) {
     var currentUv = data.current.uvi;
     var iconUrl = `https://openweathermap.org/img/w/${data.current.weather[0].icon}.png`;
     var iconDescription = data.current.weather[0].description || data.current.weather[0].main;
+    console.log(currentUv);
 
     
 //Elements that will appear in the Current Weather Card
